@@ -1,1 +1,1 @@
-# CtCI-6th-Edition-C-
+# CtCI-6th-Edition-CPP
