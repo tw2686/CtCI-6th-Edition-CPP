@@ -61,22 +61,26 @@ size_t Vector<T>::capacity() const
 	return cap;
 }
 
+// resize
+template <class T>
+void Vector<T>::resize()
+{
+	cap *= 2;
+	T *newData = new T[cap];
+	for (int i = 0; i < sze-1; ++i)
+		newData[i] = data[i];
+	delete[] data;
+	data = newData;	
+}
+
 // push_back
 template <class T>
 void Vector<T>::push_back(const T& val)
 {
 	++sze;
-	if (sze < cap) {
-		data[sze-1] = val;
-	} else {
-		cap *= 2;
-		T *newData = new T[cap];
-		for (int i = 0; i < sze-1; ++i)
-			newData[i] = data[i];
-		newData[sze-1] = val;
-		delete[] data;
-		data = newData;
-	}
+	if (sze >= cap)
+		resize();
+	data[sze-1] = val;
 }
 
 // insert
@@ -84,21 +88,11 @@ template <class T>
 T* Vector<T>::insert(const size_t pos, const T& val)
 {
 	++sze;
-	if (sze < cap) {
-		for (int i = sze-1; i > pos; --i)
-			data[i] = data[i-1];
-		data[pos] = val;
-	} else {
-		cap *= 2;
-		T *newData = new T[cap];
-		for (int i = 0; i < pos; ++i)
-			newData[i] = data[i];
-		newData[pos] = val;
-		for (int i = pos+1; i < sze; ++i)
-			newData[i] = data[i-1];
-		delete[] data;
-		data = newData;
-	}
+	if (sze >= cap)
+		resize();
+	for (int i = sze-1; i > pos; --i)
+		data[i] = data[i-1];
+	data[pos] = val;
 	return data + pos;
 }
 

@@ -50,6 +50,7 @@ class Vector
 		T *data;
 		size_t cap;	// length of actual vector
 		size_t sze;	// number of items in the vector
+		void resize();	// resizes vector by doubling capacity
 };
 
 #include "vector.hpp"
