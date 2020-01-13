@@ -96,20 +96,34 @@ ListNode* vectorToListNode(std::vector<int> vec)
 	return p;
 }
 
+/* deallocates list nodes */
+void deleteList(ListNode *&head)
+{
+	ListNode *tmp;
+	while (head) {
+		tmp = head->next;
+		delete head;
+		head = tmp;
+	}
+}
+
 int main()
 {
 	std::vector<int> v1 = { 3, 1, 5, 3, 2, 2, 1, 3, 6, 4, 8, 1 };
 
-	ListNode *list1 = vectorToListNode(v1);
-	ListNode *list2 = vectorToListNode(v1);
+	ListNode *l1 = vectorToListNode(v1);
+	ListNode *l2 = vectorToListNode(v1);
 
-	printList(list1);
-	removeDups1(list1);
-	printList(list1);
+	printList(l1);
+	removeDups1(l1);
+	printList(l1);
 
-	printList(list2);
-	removeDups2(list2);
-	printList(list2);
+	printList(l2);
+	removeDups2(l2);
+	printList(l2);
+
+	deleteList(l1);
+	deleteList(l2);
 
 	return 0;
 }

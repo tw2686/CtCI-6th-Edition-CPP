@@ -89,6 +89,17 @@ ListNode* vectorToListNode(std::vector<int> vec)
 	return p;
 }
 
+/* deallocates list nodes */
+void deleteList(ListNode *&head)
+{
+	ListNode *tmp;
+	while (head) {
+		tmp = head->next;
+		delete head;
+		head = tmp;
+	}
+}
+
 int main()
 {
 	std::vector<int> v1 = { 1, 2, 3, 4, 5 };
@@ -98,6 +109,8 @@ int main()
 	int k = 4;
 	ListNode *res1 = kthLast3(list1, k);
 	std::cout << k << "th to last node is " << res1->val << std::endl;
+
+	deleteList(list1);
 
 	return 0;
 }

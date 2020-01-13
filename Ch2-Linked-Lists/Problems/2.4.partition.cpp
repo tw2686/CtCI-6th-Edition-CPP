@@ -91,6 +91,17 @@ ListNode* vectorToListNode(std::vector<int> vec)
 	return p;
 }
 
+/* deallocates list nodes */
+void deleteList(ListNode *&head)
+{
+	ListNode *tmp;
+	while (head) {
+		tmp = head->next;
+		delete head;
+		head = tmp;
+	}
+}
+
 int main()
 {
 	std::vector<int> v1 = { 3, 5, 8, 5, 10, 2, 1 };
@@ -105,6 +116,8 @@ int main()
 	printList(list1);
 	ListNode *pList2 = partition2(list1, 5);
 	printList(pList2);
+
+	deleteList(list1);
 
 	return 0;
 }

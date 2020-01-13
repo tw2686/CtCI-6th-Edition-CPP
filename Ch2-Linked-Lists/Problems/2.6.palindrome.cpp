@@ -3,36 +3,23 @@
 
 /*
  * hints:
- * 72: picture list 1->5->9->12
- *     remove 9 makes 1->5->12
- *     you only have access to 9
+ * 5, 13, 29, 61, 101
  *
  * ask:
- * 1. problem cannot be solved if the node to be deleted is the last node
- * - mark node as dummy
  *
  * solutions:
  */
 
 /* Definition for singly-linked list */
 struct ListNode {
-	char val;
+	int val;
 	ListNode *next;
-	ListNode(char x) : val(x), next(NULL) {}
+	ListNode(int x) : val(x), next(NULL) {}
 };
 
-/* copy data, and delete */
-bool deleteMid1(ListNode *mid)
+bool palindrome(ListNode *head)
 {
-	if (mid == nullptr || mid->next == nullptr)
-		return false;
-
-	ListNode *tmp = mid->next;
-	mid->val = tmp->val;
-	mid->next = tmp->next;
-	delete tmp;
-
-	return true;	
+	return false;
 }
 
 /* helper function to print linked list */
@@ -46,7 +33,7 @@ void printList(ListNode *head)
 }
 
 /* converts vector of numbers to linked list */
-ListNode* vectorToListNode(std::vector<char> vec)
+ListNode* vectorToListNode(std::vector<int> vec)
 {
 	ListNode *tmp = new ListNode(0);
 	ListNode *p = tmp;
@@ -72,17 +59,13 @@ void deleteList(ListNode *&head)
 
 int main()
 {
-	std::vector<char> v1 = { 'a', 'b', 'c', 'd', 'e', 'f' };
+	std::vector<int> v1 = { 1, 2, 3, 2, 1 };
+	ListNode *l1 = vectorToListNode(v1);
 
-	ListNode *list1 = vectorToListNode(v1);
-	ListNode *mid = list1->next->next;
+	printList(l1);
+	std::cout << palindrome(l1) << std::endl;;
 
-	printList(list1);
-	std::cout << mid->val << std::endl;
-	deleteMid1(mid);
-	printList(list1);
-
-	deleteList(list1);
+	deleteList(l1);
 
 	return 0;
 }
