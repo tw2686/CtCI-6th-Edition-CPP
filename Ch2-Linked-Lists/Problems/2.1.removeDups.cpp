@@ -25,10 +25,13 @@ void removeDupsSorted(ListNode *head)
 {
 	ListNode *cur = head;
 	while (cur->next) {
-		if (cur->val == cur->next->val)
+		if (cur->val == cur->next->val) {
+			ListNode *tmp = cur->next;
 			cur->next = cur->next->next;
-		else
+			delete tmp;
+		} else {
 			cur = cur->next;
+		}
 	}
 }
 
@@ -40,10 +43,13 @@ void removeDups1(ListNode *head)
 	ListNode *cur = head;
 	while (cur->next) {
 		set.insert(cur->val);
-		if (set.find(cur->next->val) != set.end())
+		if (set.find(cur->next->val) != set.end()) {
+			ListNode *tmp = cur->next;
 			cur->next = cur->next->next;
-		else
+			delete tmp;
+		} else {
 			cur = cur->next;
+		}
 	}
 }
 
@@ -54,10 +60,13 @@ void removeDups2(ListNode *head)
 	while (cur) {
 		ListNode *run = cur;
 		while (run->next) {
-			if (run->next->val == cur->val)
+			if (run->next->val == cur->val) {
+				ListNode *tmp = run->next;
 				run->next = run->next->next;
-			else
+				delete tmp;
+			} else {
 				run = run->next;
+			}
 		}
 		cur = cur->next;
 	}
