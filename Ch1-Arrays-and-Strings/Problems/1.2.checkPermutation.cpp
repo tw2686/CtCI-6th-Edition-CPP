@@ -3,10 +3,7 @@
 
 /*
  * hints:
- * 1
- * 84
- * 122
- * 131
+ * 1, 84, 122, 131
  *
  * ask:
  * 1. whether its case sensitive
