@@ -8,6 +8,10 @@
  * ask:
  *
  * solutions:
+ * 1. reverse list then compare
+ * 2. use stack, and slow/fast to find mid
+ * 3. recursion
+ * 4. reverse first half of list then compare
  */
 
 /* Definition for singly-linked list */
@@ -17,9 +21,72 @@ struct ListNode {
 	ListNode(int x) : val(x), next(NULL) {}
 };
 
-bool palindrome(ListNode *head)
+/* helper function that reverses linked list */
+ListNode* reverseList(ListNode *head)
 {
-	return false;
+	ListNode *pre = nullptr;
+	ListNode *cur = head;
+	ListNode *nxt;
+	
+	while (cur) {
+		nxt = cur->next;
+		cur->next = pre;
+		pre = cur;
+		cur = nxt;
+	}
+	return pre;
+}
+
+/* reverse second half */
+bool palindrome1(ListNode *head)
+{
+	ListNode *slow = head;
+	ListNode *fast = head;
+	ListNode *cur = head;
+
+	while (fast && fast->next) {
+		slow = slow->next;
+		fast = fast->next->next;
+	}
+	if (fast) slow = slow->next;
+
+	// reverse second half of string
+	ListNode *rev = reverseList(slow);
+
+	while (rev) {
+		if (rev->val != cur->val)
+			return false;
+		rev = rev->next;
+		cur = cur->next;
+	}
+	return true;
+}
+
+/* reverse first half while finding middle */
+bool palindrome2(ListNode *head)
+{
+	ListNode *slow = head;
+	ListNode *fast = head;
+	ListNode *rev = nullptr;
+	ListNode *tmp;
+
+	while (fast && fast->next) {
+		fast = fast->next->next;
+		
+		tmp = rev;
+		rev = slow;
+		slow = slow->next;
+		rev->next = tmp;
+	}
+	if (fast) slow = slow->next;
+
+	while (rev) {
+		if (rev->val != slow->val)
+			return false;
+		rev = rev->next;
+		slow = slow->next;
+	}
+	return true;
 }
 
 /* helper function to print linked list */
@@ -63,7 +130,7 @@ int main()
 	ListNode *l1 = vectorToListNode(v1);
 
 	printList(l1);
-	std::cout << palindrome(l1) << std::endl;;
+	std::cout << palindrome2(l1) << std::endl;
 
 	deleteList(l1);
 
