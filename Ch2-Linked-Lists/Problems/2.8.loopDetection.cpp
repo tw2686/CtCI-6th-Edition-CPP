@@ -3,11 +3,13 @@
 
 /*
  * hints:
- * 20, 45, 55, 65, 76, 93, 111, 120, 129
+ * 50, 69, 83, 90
  *
  * ask:
  *
  * solutions:
+ * 1. use hashing
+ * 2. floyd cycle finding algo: move slow/fast pointers
  */
 
 /* Definition for singly-linked list */
@@ -17,20 +19,26 @@ struct ListNode {
 	ListNode(int x) : val(x), next(NULL) {}
 };
 
-/* swap list pointers if we reach end of list, move until intersection */
-ListNode* intersection(ListNode *l1, ListNode *l2)
+ListNode* loopDetect(ListNode *head)
 {
-	ListNode *p1 = l1;
-	ListNode *p2 = l2;
-	
-	while (p1 != p2) {
-		p1 = p1->next;
-		p2 = p2->next;
-		if (!p1) p1 = l2;
-		if (!p2) p2 = l1;
-	}	
+	ListNode *slow = head;
+	ListNode *fast = head;
+	while (fast && fast->next) {
+		slow = slow->next;
+		fast = fast->next->next;
+		if (slow == fast) break;
+	}
+	if (!fast || !fast->next) return nullptr;
 
-	return p1;
+	std::cout << "Collision: " << slow->val << std::endl;
+
+	slow = head;	
+	while (slow != fast) {
+		slow = slow->next;
+		fast = fast->next;
+	}
+
+	return fast;
 }
 
 /* helper function to print linked list */
@@ -71,24 +79,20 @@ void deleteList(ListNode *&head)
 int main()
 {
 	std::vector<int> v1 = { 1, 2, 3, 4, 5 };
-	std::vector<int> v2 = { 6, 7, 8 };
 	ListNode *l1 = vectorToListNode(v1);
-	ListNode *l2 = vectorToListNode(v2);
 
-	ListNode *l1mid = l1->next->next;
-	ListNode *l2end = l2->next;
-	l2end->next = l1mid;
+	// make circular linked list
+	// 5 points to 3
+	ListNode *cur = l1;
+	while (cur->next)
+		cur = cur->next;
+	cur->next = l1->next->next;
 
-	printList(l1);
-	printList(l2);
-	ListNode *res = intersection(l1, l2);
-	std::cout << "Intersection:" << std::endl;
-	printList(res);
+	ListNode *res = loopDetect(l1);
+	std::cout << "Loop Start: " << res->val << std::endl;
 
-	l2end->next = nullptr;
-
+	cur->next = nullptr;
 	deleteList(l1);
-	deleteList(l2);
-
+	
 	return 0;
 }
