@@ -9,6 +9,10 @@
  * Solution:
  * 1. inorder traversal
  * use array, or previous to keep track
+ * 2. min/max
+ * pass min/max values as range limiters
+ * branch left, max gets updated
+ * branch right, min gets updated
  *
  * Time Complexity:
  * O(N), check every node
@@ -26,14 +30,32 @@ struct TreeNode {
 };
 
 /* return boolean using recursion */
-bool checkBST(TreeNode *root, int &prev)
+bool checkBSTBool(TreeNode *root, int &prev)
 {
 	if (!root) return true;
-	if (!checkBST(root->left, prev)) return false;
+	if (!checkBSTBool(root->left, prev)) return false;
 	if (prev != 0 && root->val <= prev) return false;
 	prev = root->val;
-	if (!checkBST(root->right, prev)) return false;
+	if (!checkBSTBool(root->right, prev)) return false;
 	return true;
+}
+
+/* min max */
+bool minMax(TreeNode *root, int &min, int &max)
+{
+	if (!root) return true;
+	if ((min && root->val <= min) || (max && root->val > max))
+		return false;
+	if (!minMax(root->left, min, root->val) || !minMax(root->right, root->val, max))
+		return false;
+	return true;
+}
+
+/* min max check bst */
+bool checkBSTMinMax(TreeNode *root)
+{
+	int min = 0, max = 0;
+	return minMax(root, min, max);
 }
 
 /* check if cur val is greater than prev value inorder search */
@@ -52,7 +74,7 @@ int checkValid(TreeNode *root, int &prev)
 	return prev;	
 }
 
-bool validateBST(TreeNode *root)
+bool checkBSTInt(TreeNode *root)
 {
 	int prev = 0;
 	return checkValid(root, prev) != -1;
@@ -106,8 +128,9 @@ int main()
 	std::cout << std::endl;
 	
 	int prev = 0;
-	bool valid1 = checkBST(root, prev);
-	std::cout << "BT is a valid BST: " << valid1 << std::endl;
+	std::cout << "BT is a valid BST: " << checkBSTBool(root, prev) << std::endl;
+	std::cout << "BT is a valid BST: " << checkBSTMinMax(root) << std::endl;
+	std::cout << "BT is a valid BST: " << checkBSTInt(root) << std::endl;
 
 	std::cout << std::endl;
 
@@ -116,8 +139,9 @@ int main()
 	std::cout << std::endl;
 	
 	prev = 0;
-	bool valid2 = checkBST(root2, prev);
-	std::cout << "BT is a valid BST: " << valid2 << std::endl;
+	std::cout << "BT is a valid BST: " << checkBSTBool(root2, prev) << std::endl;
+	std::cout << "BT is a valid BST: " << checkBSTMinMax(root2) << std::endl;
+	std::cout << "BT is a valid BST: " << checkBSTInt(root2) << std::endl;
 
 	return 0;
 }
