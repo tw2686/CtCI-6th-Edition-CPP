@@ -1,0 +1,183 @@
+6.1 The Heavy Pill:
+Hints:
+186, 252, 319, 387
+Problem:
+- 20 bottles of pills
+- 19 bottles have 1.0 g pills
+- 1 bottle has 1.1 g pills
+- scale, how to find heavy bottle
+- use only once
+Solution:
+- 1 pill, 2 pill, 3 pill... plus 1 for every bottle to number them
+- different number of pill for every bottle
+- the .n will tell us which bottle
+- so at least 1+2+...+20 = (20*21)/2 = 210g
+- (weight - 210g) / 0.1 g.
+- 211.3 g means Bottle #13 would have the heavy pills
+
+6.2 Basketball:
+Hints:
+181, 239, 284, 323
+Problem:
+- one hoop, 2 games
+- Game 1: get one shot to make the hoop
+- Game 2: get 3 shots and you have to make 2/3 shots
+- p is probability of making a particular shot
+- for which values of p should you pick one game or the other
+Solution:
+- P(G1) = p
+- s(k,n) is probability of making k shots out of n
+- P(G2) = s(2,3) + s(3,3)
+- s(3,3) = p*p*p = p^3
+- s(2,3) = P(1,2,X) + P(1,X,3) + P(X,2,3)
+- 	 = 3*(p * p * (1-p))
+- 	 = 3(1-p)p^2
+- p^3 + 3(1-p)p^2 = p^3 + 3p^2 - 3p^3
+- = 3p^2 - 2p^3
+- Play Game 1 if P(G1) > P(G2)
+- p > 3p^2 - 2p^3
+- 1 > 3p - 2p^2
+- 2p^2 - 3p + 1 > 0
+- (2p-1)(p-1) > 0
+- Both are negative hence
+- 2p-1 < 0
+- 2p < 1
+- p < 0.5
+- Play G1 if 0 < p < 0.5
+- Play G2 if 0.5 < p < 1
+- if 0, 0.5 or 1, then P(G1) = P(G2)
+
+6.3 Dominos:
+Hints:
+181, 239, 284, 323
+Problem:
+- 8x8 chessboard
+- two diagnally opposite corners cut off
+- 31 dominos, single domino cover exactly 2 squares
+- use 31 dominos to cover the entire board
+- 
+Solutions:
+- Impossible
+- the two diagonal pieces will always be of same color
+- 32 black 32 white -> 30 black 32 white
+- a domino will always cover 1 black and 1 white
+- 31 dominos will cover 31 black and 31 white
+- however we must cover 30 black and 32 white
+- hence impossible
+
+6.4 Ants on a Triangle:
+Hints:
+157, 195, 296
+Problem:
+- 3 ants on different vertices of triangle
+- probability of collision (between any two or all)
+- start walking on the sides of the triangle
+- ant randomly picks direction, equally likely, same speed
+- probability of collision with n ants on an n-vertex polygon
+Solution:
+Triangle:
+P(clock) = (1/2)^3
+P(counter) = (1/2)^3
+P(same dir) = (1/2)^3 + (1/2)^3 = 1/4
+P(collision) = 1 - P(same dir) = 3/4
+n-vertex polygon:
+P(clock) = (1/2)^n
+P(counter) = (1/2)^n
+P(same dir) = (1/2)^n + (1/2)^n = 2(1/2)^n = (1/2)^(n-1)
+P(collision) = 1 - P(same dir) = 1 - (1/2)^(n-1)
+
+6.5 Jugs of Water:
+Hints:
+149, 379, 400
+Problem:
+- 5 quart jug, 3 quart jug, unlimited supply of water
+- come up with exactly 4 quarts of water
+Solution:
+- fill 5 quart first, pour from 5 to 3 so you get 2 in 5
+- throw out water in 3, and pour the 2 in 5 to 3
+- now fill 5, and pour enough to fill 2 to 3 in 3
+- now 5 has 4 quarts of water
+5 Quart	3 Quart
+5	0
+2	3
+2	0
+0	2
+5	2
+4	3
+4
+
+6.6 Blue-Eyed Island:
+Hints:
+218, 282, 341, 370
+Problem:
+- bunch of people live on island
+- visitor orders all blue-eyed people must leave island
+- flight ot at 8:00 pm every evening
+- each person can see everyone else's eye color, but not their own
+- do not know how many people have blue eyes, at least one person does
+- how many days will it take the blue-eyed people to leave
+Solution:
+- 1 day
+- n people, c blue
+- Case c = 1: 1 person sees no blue eyes, means he is blue eye since c > 0
+- Case c = 2: both stay first night to see if the other leaves
+- if the other is still there second night it means both have to leave
+- Case c > 2: if c men have blue eyes, it will take c nights for blue eyed men to leave
+
+6.7 The Apocolypse:
+Hints:
+154, 160, 171, 188, 201
+Problem:
+- world queen is concerned about birth rate
+- decrees that all families should ensure they have 1 girl or face massive fines
+- if all families abide, continue to have children until 1 girl
+- what will gender ratio of new generation be
+Solution:
+- the ratio will still be 50:50
+- the odds not changed, even though we stop having boy once we reach girl
+
+6.8 The Egg Drop Problem:
+Hints:
+156, 233, 294, 333, 357, 374, 395
+Problem:
+- Building of 100 floors
+- If egg drops from Nth floor or above, it will break
+- If it's dropped from any floor below, it will not break
+- Given 2 eggs, find N, minimizing the number of drops
+Solution:
+- Egg 1 gets dropped 14, 13, 12... til 4, if we encounter break, then use egg2 to determine exact by
+- incrementing one floor at at time from previous floor
+- this makes it so that the number of drops is minimized, because egg2 will at most be dropped the same amount of time as egg1
+
+6.9 100 Lockers:
+Hints:
+139, 172, 264, 306
+Problem:
+- 100 closed lockers in a hallway
+- 1st pass, opens all 100 lockers
+- 2nd pass, closes every second locker
+- 3rd pass, toggles every third locker (opposite)
+- continues for 100 passes
+- for each i, man toggles every ith locker
+- after 100th pass, he toggles only locker 100, how many lockers are open?
+Solution: 
+- realize that doors are left open only if number of factors is odd
+- numbers of factors is odd for perfect squares, which there are 10
+- hence 10 lockers will be left open
+
+6.10 Poison:
+Hints:
+146, 163, 183, 191, 205, 221, 230, 241, 249
+Problem:
+- 1000 bottles of soda, 1 is poisoned
+- 10 test strips to detect poison
+- Single drop of poison will turn test strip positive permanently
+- put any number of drops on test strip at once
+- reuse a test strip as many times as you'd like
+- run tests once per day
+- takes 7 days to return result
+- figure out the poisoned bottel in as few days as possible?
+Solution:
+- Use the strips as binary representation of the bottles numbers
+- 10 strips means it can represent/store upto 1024 bits/numbers
+
