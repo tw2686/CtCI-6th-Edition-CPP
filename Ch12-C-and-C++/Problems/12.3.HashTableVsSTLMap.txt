@@ -1,0 +1,32 @@
+Hash Table:
+- Hash table, value is stored by calling a hash function on a key
+- values are not stored in sorted order
+- insert/lookup done in amortized O(1) time
+- potential collisions 
+- handled using chaining, create linked list of all values whose keys map to particular index
+
+Implementation:
+- traditionally with an array of linked lists
+- when inserting key/value pair, we map key to an index in the array using a hash function
+- value is then inserted into the linked list at that position
+- elements in the linked lists at any particular index does not have the same key
+- hashFunction(key) is the same for these values
+- To retreieve value for specific key
+- store both original key and value in each node
+
+Design Criteria:
+1. use good hash function to ensure keys are well distributed to avoid collisions and speed to find element would decline
+2. no matter how good the hash function is, still have collisions, need to handle them, chaining via linked list (other ways)
+3. implement methods to dynamically increase/decrease the hash table size depending on capacity
+- when ratio of the number of elements to the table size exceeds a certain threshold
+- increase hash table size
+- transfer old entries to new table
+- expensive, not to do it too often
+
+STL map:
+- inserts key/value pairs into a binary search tree based on keys
+- no need to handle collisions, since tree is balanced
+- insert/lookup is O(log N)
+
+What data structure can be used instead of a hash table?
+- Use STL map or binary tree if inputs is small, takes O(log N) time to access
